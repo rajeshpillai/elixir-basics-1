@@ -30,6 +30,6 @@ defmodule Person do
       {:ok, sender, message} ->
         IO.puts "[#{inspect self()}] Received #{message} from #{inspect sender}"
     end
-    listen() # long running
+    listen() # tail-call long running
   end
 end
