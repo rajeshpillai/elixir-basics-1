@@ -3,10 +3,15 @@
 #   return n * fact(n - 1);  
 # }
 
+# iex -r recursion.exs   # for debugging
 defmodule Calc do 
   # Factorial
   def fact(0), do: 1
-  def fact(n), do: n * fact(n-1)
+  # def fact(n), do: n * fact(n-1)
+  def fact(n) do 
+    require IEx; IEx.pry
+    n * fact(n-1)
+  end
 
   # Multiply
   def mult([]), do: 1
@@ -17,9 +22,9 @@ defmodule Calc do
 end
 
 
-Calc.fact(100000) |> IO.puts
+# Calc.fact(100000) |> IO.puts
 
-# Calc.fact(5) |> IO.puts
+Calc.fact(5) |> IO.puts
 
 # Calc.fact(10_00_000) |> IO.puts
 
