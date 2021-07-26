@@ -16,7 +16,7 @@ defmodule TodoappWeb.Router do
   scope "/", TodoappWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    # get "/", PageController, :index
 
     # get "/todos", TodoController, :index
     # get "/todos/new", TodoController, :new
@@ -27,6 +27,7 @@ defmodule TodoappWeb.Router do
     # put "/todos/:id", TodoController, :update
     # patch "/todos/:id", TodoController, :update
 
+    get "/", TodoController, :index
     resources "/todos", TodoController
 
 
