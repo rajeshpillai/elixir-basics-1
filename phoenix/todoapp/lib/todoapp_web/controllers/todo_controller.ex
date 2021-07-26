@@ -5,9 +5,25 @@ defmodule TodoappWeb.TodoController do
   alias Todoapp.TodoApp.Todo
   alias Todoapp.Repo
 
+  import Ecto.Query
+  alias Todoapp.DataContext.Comment
+
   def index(conn, _params) do
     # todos = TodoApp.list_todos()
-    todos = Repo.all(Todo) |> Repo.preload(:comments)
+    # todos = Repo.all(Todo) |> Repo.preload(:comments)
+    # todos = Repo.all(from(p in Todo, preload: [:comments], select: p))
+
+    # query = from t in Todo,
+    #       left_join: c in Comment, on: c.todo_id == t.id
+    # todos = Repo.all(query)
+    
+    # Grab parent/child record in one query, use preload in combination 
+    # with join (Only for demo code. Use it at the right place)
+    query = from t in Todo,
+      left_join: c in assoc(t, :comments),
+      preload: [comments: c]
+
+    todos = Repo.all(query)
 
     render(conn, "index.html", todos: todos)
   end
