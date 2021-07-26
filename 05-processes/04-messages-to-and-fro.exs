@@ -24,8 +24,12 @@ defmodule Demo do
 
     # Read from the mail box (FIFO)
     receive do 
-      response -> IO.puts("Response: #{response}")
+      response ->  
+        :timer.sleep(5000)
+        IO.puts("Response: #{response}")
     end
+
+    IO.puts "Is this blocked?"
   end
 end
 
