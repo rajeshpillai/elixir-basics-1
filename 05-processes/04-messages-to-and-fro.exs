@@ -27,6 +27,8 @@ defmodule Demo do
       response ->  
         :timer.sleep(5000)
         IO.puts("Response: #{response}")
+    # after 
+    #   1000 ->IO.puts "No response received"
     end
 
     IO.puts "Is this blocked?"
