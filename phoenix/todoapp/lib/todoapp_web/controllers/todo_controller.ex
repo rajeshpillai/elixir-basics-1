@@ -3,9 +3,12 @@ defmodule TodoappWeb.TodoController do
 
   alias Todoapp.TodoApp
   alias Todoapp.TodoApp.Todo
+  alias Todoapp.Repo
 
   def index(conn, _params) do
-    todos = TodoApp.list_todos()
+    # todos = TodoApp.list_todos()
+    todos = Repo.all(Todo) |> Repo.preload(:comments)
+
     render(conn, "index.html", todos: todos)
   end
 

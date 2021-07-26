@@ -6,6 +6,7 @@
       <th>Title</th>
       <th>Completed</th>
       <th>Priority</th>
+      <th>Comments Count</th>
 
       <th></th>
     </tr>
@@ -16,7 +17,7 @@
       <td><%= todo.title %></td>
       <td><%= todo.completed %></td>
       <td><%= todo.priority %></td>
-
+      <td><%= length(todo.comments) %></td>
       <td>
         <span><%= link "Show", to: Routes.todo_path(@conn, :show, todo) %></span>
         <span><%= link "Edit", to: Routes.todo_path(@conn, :edit, todo) %></span>
