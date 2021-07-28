@@ -1,6 +1,10 @@
 defmodule TodoappWeb.Router do
   use TodoappWeb, :router
 
+  # use Phoenix.Router
+  # import Plug.Conn
+  # import Phoenix.Controller
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -32,6 +36,8 @@ defmodule TodoappWeb.Router do
 
     # mix phx.gen.html DataContext Comment comments title:string todo_id:references:todos
     resources "/comments", CommentController
+
+    get "/hello", HelloController, :index
 
 
   end

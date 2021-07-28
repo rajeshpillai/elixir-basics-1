@@ -20,6 +20,7 @@
       <td><%= length(todo.comments) %></td>
       <td>
         <span><%= link "Show", to: Routes.todo_path(@conn, :show, todo) %></span>
+        <a href="/todos/<%= todo.id %>">Show hardcoded</a>
         <span><%= link "Edit", to: Routes.todo_path(@conn, :edit, todo) %></span>
         <span><%= link "Delete", to: Routes.todo_path(@conn, :delete, todo), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
