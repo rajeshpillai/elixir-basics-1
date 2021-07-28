@@ -5,7 +5,7 @@ defmodule TodoappWeb.TodoController do
   alias Todoapp.TodoApp.Todo
   alias Todoapp.Repo
 
-  import Ecto.Query
+  import Ecto.Query, only: [from: 2]   # Ecto.Query has a preload.  It can conflict with Repo.preload, if not careful
   alias Todoapp.DataContext.Comment
 
   def index(conn, _params) do
@@ -70,12 +70,28 @@ defmodule TodoappWeb.TodoController do
     # TRY IN ONE QUERY
       ##  - Two different approaches
 
-    one_todo = Repo.get(Todo, id)
-    comments = Ecto.assoc(one_todo, :comments) |> Repo.all
-
     # todo->comments -> already fetched
-    IO.puts("+++++++++++")
-    render(conn, "show.html", todo: one_todo, comments: comments)
+    
+    # Approach 1
+    # one_todo = Repo.get(Todo, id)
+    # comments = Ecto.assoc(one_todo, :comments) |> Repo.all
+    # render(conn, "show.html", todo: one_todo, comments: comments)
+
+    # Approach 2
+    # todo = Repo.get(Todo, id) |> Repo.preload([:comments])
+    # render(conn, "show.html", todo: todo)
+
+    # Approach 3
+    todo = Repo.one from t in Todo,  
+      where: t.id == ^id,
+      left_join: c in assoc(t, :comments),
+      preload: [comments: c]
+    
+    IO.puts "+++++++"
+    IO.inspect todo
+    render(conn, "show.html", todo: todo)
+
+
   end
 
   def edit(conn, %{"id" => id}) do
