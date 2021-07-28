@@ -19,6 +19,8 @@ defmodule TodoappWeb.TodoController do
     
     # Grab parent/child record in one query, use preload in combination 
     # with join (Only for demo code. Use it at the right place)
+    
+    # TODO:
     query = from t in Todo,
       left_join: c in assoc(t, :comments),
       preload: [comments: c]
@@ -26,6 +28,22 @@ defmodule TodoappWeb.TodoController do
     todos = Repo.all(query)
 
     render(conn, "index.html", todos: todos)
+  end
+
+  # Json route
+  def todo_json(conn, _params) do
+    todos = TodoApp.list_todos()
+        |> Enum.map(&todo_json/1)
+  
+    json(conn, todos)
+  end
+
+  defp todo_json(todo) do
+    %{
+      title: todo.title,
+      inserted_at: todo.inserted_at,
+      updated_at: todo.updated_at
+    }
   end
 
   def new(conn, _params) do
@@ -46,8 +64,18 @@ defmodule TodoappWeb.TodoController do
   end
 
   def show(conn, %{"id" => id}) do
-    todo = TodoApp.get_todo!(id)
-    render(conn, "show.html", todo: todo)
+     
+    # TEMP: BAD CODE
+
+    # TRY IN ONE QUERY
+      ##  - Two different approaches
+
+    one_todo = Repo.get(Todo, id)
+    comments = Ecto.assoc(one_todo, :comments) |> Repo.all
+
+    # todo->comments -> already fetched
+    IO.puts("+++++++++++")
+    render(conn, "show.html", todo: one_todo, comments: comments)
   end
 
   def edit(conn, %{"id" => id}) do

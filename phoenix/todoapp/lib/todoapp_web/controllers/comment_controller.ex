@@ -12,8 +12,11 @@ defmodule TodoappWeb.CommentController do
 
   def new(conn, _params) do
     changeset = DataContext.change_comment(%Comment{})
+    
+    # Get the todos
     todos = TodoApp.list_todos() 
       |> Enum.map(&{"#{&1.title}", &1.id})
+
     render(conn, "new.html", changeset: changeset, todos: todos)
   end
 
@@ -25,7 +28,10 @@ defmodule TodoappWeb.CommentController do
         |> redirect(to: Routes.comment_path(conn, :show, comment))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        # Get the todos
+        todos = TodoApp.list_todos() 
+          |> Enum.map(&{"#{&1.title}", &1.id})
+        render(conn, "new.html", changeset: changeset, todos: todos)
     end
   end
 

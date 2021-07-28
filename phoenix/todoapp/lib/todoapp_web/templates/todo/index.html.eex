@@ -1,3 +1,5 @@
+<%= link "Comments", to: Routes.comment_path(@conn, :index) %>
+
 <h1>Listing Todos</h1>
 
 <table>
@@ -25,6 +27,12 @@
         <span><%= link "Delete", to: Routes.todo_path(@conn, :delete, todo), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
     </tr>
+    <%= for comment <- todo.comments do %>
+      <tr>
+        <td>Comments: </td>
+        <td><%= comment.title %></td>
+      </tr>
+    <%end %>
 <% end %>
   </tbody>
 </table>

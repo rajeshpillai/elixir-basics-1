@@ -38,11 +38,12 @@ defmodule TodoappWeb.Router do
     resources "/comments", CommentController
 
     get "/hello", HelloController, :index
-
+    get "/todos.json", TodoController, :todo_json
 
   end
 
   # Other scopes may use custom stacks.
+  
   # scope "/api", TodoappWeb do
   #   pipe_through :api
   # end

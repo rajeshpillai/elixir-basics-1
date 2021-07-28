@@ -19,5 +19,10 @@
 
 </ul>
 
+<h4>Comments </h4>
+<%= for comment <- @comments do %>
+   <div> <%= comment.title %> </div>
+<% end %>
+
 <span><%= link "Edit", to: Routes.todo_path(@conn, :edit, @todo) %></span>
 <span><%= link "Back", to: Routes.todo_path(@conn, :index) %></span>
