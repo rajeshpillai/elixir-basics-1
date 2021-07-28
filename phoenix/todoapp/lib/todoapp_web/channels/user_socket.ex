@@ -2,6 +2,8 @@ defmodule TodoappWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
+
+  # channel "<name of channel>:wildcard(anything):its_like_route", Module
   # channel "room:*", TodoappWeb.RoomChannel
 
   # Socket params are passed from the client and can
