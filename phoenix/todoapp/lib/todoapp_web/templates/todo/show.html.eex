@@ -20,12 +20,25 @@
 
 </ul>
 
+<h4>New Comment</h4>
+<form id="form-new-comment">
+  <label>Title</label>
+  <textarea id="comment_title" row = 10 cols = 100></textarea>
+  <button type="submit">Publish</button>
+</form>
+<br/>
+
+<h4>Comments: (websocket)
+<ul id="comments">
+</ul>
+
 <h4>Comments </h4>
 <ul>
   <%= for comment <- @todo.comments do %>
     <li> <%= comment.title %> </li>
   <% end %>
 </ul>
+
 
 <span><%= link "Edit", to: Routes.todo_path(@conn, :edit, @todo) %></span>
 <span><%= link "Back", to: Routes.todo_path(@conn, :index) %></span>

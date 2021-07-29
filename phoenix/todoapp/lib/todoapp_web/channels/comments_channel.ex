@@ -19,15 +19,21 @@ defmodule TodoappWeb.CommentsChannel do
   end
   
 
-  def handle_in(name, %{"title" => title}, socket) do 
+  def handle_in(name, %{"content" => content}, socket) do 
     todo = socket.assigns.todo
 
     changeset = todo 
       |> Ecto.build_assoc(:comments)
-      |> Comment.changeset(%{title: title})
+      |> Comment.changeset(%{title: content})
 
     case Repo.insert(changeset) do 
       {:ok, comment} ->
+        # broadcast to every client
+        broadcast!(socket, 
+          "comments:#{socket.assigns.todo.id}:new", 
+          %{comment: comment
+        })
+
         {:reply, :ok, socket}
       {:error, _reason} ->
         {:reply, {:error, %{errors: changeset}}, socket}
@@ -36,7 +42,7 @@ defmodule TodoappWeb.CommentsChannel do
 
     IO.puts("handle_in ++++++++")
     IO.puts(name)
-    IO.inspect(title)
+    IO.inspect(content)
 
     {:reply, :ok, socket}
   end
