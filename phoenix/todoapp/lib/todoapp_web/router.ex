@@ -33,6 +33,7 @@ defmodule TodoappWeb.Router do
 
     get "/", TodoController, :index
     resources "/todos", TodoController
+    post "/todos/create_comment", TodoController, :create_comment
 
     # mix phx.gen.html DataContext Comment comments title:string todo_id:references:todos
     resources "/comments", CommentController

@@ -21,7 +21,7 @@
 
 <h4>Comments </h4>
 
-<%= render  TodoappWeb.CommentView, "form.html", Map.put(assigns, :action, Routes.comment_path(@conn, :create)) %>
+<%= render  TodoappWeb.CommentView, "form.html", Map.put(assigns, :action, Routes.todo_path(@conn, :create_comment)) %>
 
 
 <ul>

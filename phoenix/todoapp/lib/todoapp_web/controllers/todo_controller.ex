@@ -10,6 +10,7 @@ defmodule TodoappWeb.TodoController do
 
   import Ecto.Query, only: [from: 2, from: 1]
   alias Todoapp.DataContext.Comment
+  
 
   def index(conn, _params) do
     # todos = TodoApp.list_todos()
@@ -107,6 +108,34 @@ defmodule TodoappWeb.TodoController do
 
     render(conn, :show, todo: todo, todo_id: todo.id, changeset: changeset, todos: todos )
   end
+
+  def create_comment(conn, %{"comment" => comment_params}) do
+    IO.puts "creact_comment++++++++++"
+    IO.inspect comment_params
+    IO.inspect comment_params["todo_id"]
+    todo_id = comment_params["todo_id"]
+
+    case DataContext.create_comment(comment_params) do
+      {:ok, comment} ->
+        conn
+        |> put_flash(:info, "Comment created successfully.")
+        |> redirect(to: Routes.todo_path(conn, :index))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        # Get the todos
+        query = from t in Todo,
+          where: t.id == ^todo_id,
+          left_join: c in assoc(t, :comments),
+          preload: [comments: c]
+   
+        todo = Repo.one(query)
+            todos = TodoApp.list_todos() 
+              |> Enum.map(&{"#{&1.title}", &1.id})
+
+        render(conn, "show.html", changeset: changeset, todos: todos, todo: todo,  todo_id: todo_id)
+    end
+  end
+
 
   def edit(conn, %{"id" => id}) do
     todo = TodoApp.get_todo!(id)

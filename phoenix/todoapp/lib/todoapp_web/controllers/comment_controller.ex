@@ -20,6 +20,8 @@ defmodule TodoappWeb.CommentController do
     render(conn, "new.html", changeset: changeset, todos: todos, todo_id: nil)
   end
 
+  
+  
   def create(conn, %{"comment" => comment_params}) do
     case DataContext.create_comment(comment_params) do
       {:ok, comment} ->
@@ -31,7 +33,7 @@ defmodule TodoappWeb.CommentController do
         # Get the todos
         todos = TodoApp.list_todos() 
           |> Enum.map(&{"#{&1.title}", &1.id})
-        render(conn, "new.html", changeset: changeset, todos: todos)
+        render(conn, "new.html", changeset: changeset, todos: todos, todo_id: nil)
     end
   end
 
