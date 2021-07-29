@@ -1,6 +1,5 @@
 <h1>Show Todo</h1>
 
-<button id="action_publish">Publish Message</button>
 
 <ul>
 
@@ -30,3 +29,10 @@
 
 <span><%= link "Edit", to: Routes.todo_path(@conn, :edit, @todo) %></span>
 <span><%= link "Back", to: Routes.todo_path(@conn, :index) %></span>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function (){
+    window.createSocket(<%= @todo.id %>)
+  })
+</script>
