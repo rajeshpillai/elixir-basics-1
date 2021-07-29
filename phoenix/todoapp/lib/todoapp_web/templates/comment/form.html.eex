@@ -4,9 +4,9 @@
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
-
+  <%= hidden_input f, :todo_id, value: @todo_id %>
   <%= label f, :todo %>
-  <%= select f, :todo_id, @todos  %>
+  <%= select f, :todo_id, @todos, value: @todo_id  %>
   <%= label f, :title %>
   <%= text_input f, :title %>
   <%= error_tag f, :title %>

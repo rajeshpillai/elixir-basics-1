@@ -1,3 +1,4 @@
+<span><%= link "New Todo", to: Routes.todo_path(@conn, :new) %> | </span>
 <%= link "Comments", to: Routes.comment_path(@conn, :index) %>
 
 <h1>Listing Todos</h1>
@@ -37,4 +38,3 @@
   </tbody>
 </table>
 
-<span><%= link "New Todo", to: Routes.todo_path(@conn, :new) %></span>

@@ -1,6 +1,9 @@
 defmodule TodoappWeb.TodoController do
   use TodoappWeb, :controller
 
+  alias Todoapp.DataContext
+  alias Todoapp.DataContext.Comment
+
   alias Todoapp.TodoApp
   alias Todoapp.TodoApp.Todo
   alias Todoapp.Repo
@@ -64,8 +67,6 @@ defmodule TodoappWeb.TodoController do
   end
 
   def show(conn, %{"id" => id}) do
-     
-    
     # TRY IN ONE QUERY
       ##  - Two different approaches
 
@@ -91,7 +92,20 @@ defmodule TodoappWeb.TodoController do
 
     # text(conn, "hello query")
 
-    render(conn, :show, todo: todo )
+
+    # Comment form data
+    changeset = DataContext.change_comment(%Comment{})
+    # changeset = Ecto.build_assoc(todo, :comments)
+
+    IO.puts "Comment:CS:+++++++++"
+    IO.inspect changeset
+     # Get the todos
+    todos = TodoApp.list_todos() 
+      |> Enum.map(&{"#{&1.title}", &1.id})
+
+
+
+    render(conn, :show, todo: todo, todo_id: todo.id, changeset: changeset, todos: todos )
   end
 
   def edit(conn, %{"id" => id}) do

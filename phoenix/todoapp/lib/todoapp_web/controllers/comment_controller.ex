@@ -17,7 +17,7 @@ defmodule TodoappWeb.CommentController do
     todos = TodoApp.list_todos() 
       |> Enum.map(&{"#{&1.title}", &1.id})
 
-    render(conn, "new.html", changeset: changeset, todos: todos)
+    render(conn, "new.html", changeset: changeset, todos: todos, todo_id: nil)
   end
 
   def create(conn, %{"comment" => comment_params}) do
