@@ -20,7 +20,7 @@
 </ul>
 
 <h4>Comments </h4>
-<%= for comment <- @comments do %>
+<%= for comment <- @todo.comments do %>
    <div> <%= comment.title %> </div>
 <% end %>
 

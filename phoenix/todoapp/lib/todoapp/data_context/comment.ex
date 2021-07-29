@@ -4,8 +4,8 @@ defmodule Todoapp.DataContext.Comment do
 
   schema "comments" do
     field :title, :string
-    field :todo_id, :id
-    # belongs_to :todos, Todo, foreign_key: :todo_id
+    # field :todo_id, :id
+    belongs_to :todos, Todo, foreign_key: :todo_id
     timestamps()
   end
 

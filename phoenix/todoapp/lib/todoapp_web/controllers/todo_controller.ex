@@ -27,7 +27,7 @@ defmodule TodoappWeb.TodoController do
 
     todos = Repo.all(query)
 
-    render(conn, "index.html", todos: todos)
+    render(conn, :index, todos: todos)
   end
 
   # Json route
@@ -70,12 +70,12 @@ defmodule TodoappWeb.TodoController do
     # TRY IN ONE QUERY
       ##  - Two different approaches
 
-    one_todo = Repo.get(Todo, id)
-    comments = Ecto.assoc(one_todo, :comments) |> Repo.all
+    todo = Repo.get(Todo, id) |> Repo.preload([:comments])
+    # comments = Ecto.assoc(one_todo, :comments) |> Repo.all
 
     # todo->comments -> already fetched
     IO.puts("+++++++++++")
-    render(conn, "show.html", todo: one_todo, comments: comments)
+    render(conn, :show, todo: todo)
   end
 
   def edit(conn, %{"id" => id}) do

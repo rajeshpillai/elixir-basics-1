@@ -1,3 +1,9 @@
+# Json
+http://localhost:4000/api/todos
+http://localhost:4000/api/todos/1
+
+ curl -i -H "Accept: application/json" localhost:4000/api/todos
+
 # Web Socket
 
 Channels are distinct connection (like chat room). You can create several channels

@@ -6,7 +6,7 @@ defmodule TodoappWeb.Router do
   # import Phoenix.Controller
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]  # Add json
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -44,9 +44,10 @@ defmodule TodoappWeb.Router do
 
   # Other scopes may use custom stacks.
   
-  # scope "/api", TodoappWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", TodoappWeb do
+     pipe_through :api
+     resources "/todos", TodoController, only: [:index, :show]
+  end
 
   # Enables LiveDashboard only for development
   #
