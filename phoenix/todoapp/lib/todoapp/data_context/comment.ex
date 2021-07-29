@@ -2,6 +2,7 @@ defmodule Todoapp.DataContext.Comment do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:title, :id]}
   schema "comments" do
     field :title, :string
     # field :todo_id, :id

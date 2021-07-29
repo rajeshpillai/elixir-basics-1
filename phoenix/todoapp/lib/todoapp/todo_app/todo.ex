@@ -3,6 +3,7 @@ defmodule Todoapp.TodoApp.Todo do
   import Ecto.Changeset
   alias Todoapp.DataContext.Comment
 
+   @derive {Jason.Encoder, only: [:title, :id, :comments]}
   schema "todos" do
     field :completed, :boolean, default: false
     field :priority, :string

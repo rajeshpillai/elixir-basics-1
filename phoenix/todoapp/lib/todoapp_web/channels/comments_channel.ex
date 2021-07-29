@@ -1,20 +1,42 @@
 defmodule TodoappWeb.CommentsChannel do 
   use Phoenix.Channel 
 
-  def join(name, _message, socket) do
+  alias Todoapp.TodoApp.Todo
+  alias Todoapp.Repo
+  alias Todoapp.DataContext.Comment
+
+  def join("comments:" <> topic_id, _params, socket) do
     IO.puts("+++++")
-    IO.puts(name)
-    {:ok, %{hey: "there"}, socket}
+    IO.puts(topic_id)
+
+    todo = Repo.get(Todo, topic_id) |> Repo.preload([:comments])
+    IO.inspect todo 
+    result = %{
+      id: todo.id,
+      title: todo.title
+    }
+    {:ok, %{todo: todo}, assign(socket, :todo, todo)}
   end
   
-  def join("comments:" <> _private_room_id, _params, _socket) do
-    {:error, %{reason: "unauthorized"}}
-  end
 
-  def handle_in(name, message, socket) do 
+  def handle_in(name, %{"title" => title}, socket) do 
+    todo = socket.assigns.todo
+
+    changeset = todo 
+      |> Ecto.build_assoc(:comments)
+      |> Comment.changeset(%{title: title})
+
+    case Repo.insert(changeset) do 
+      {:ok, comment} ->
+        {:reply, :ok, socket}
+      {:error, _reason} ->
+        {:reply, {:error, %{errors: changeset}}, socket}
+
+    end
+
     IO.puts("handle_in ++++++++")
     IO.puts(name)
-    IO.inspect(message)
+    IO.inspect(title)
 
     {:reply, :ok, socket}
   end
