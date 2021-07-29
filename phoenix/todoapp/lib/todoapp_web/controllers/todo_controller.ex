@@ -27,7 +27,7 @@ defmodule TodoappWeb.TodoController do
 
     todos = Repo.all(query)
 
-    render(conn, "index.html", todos: todos)
+    render(conn, :index, todos: todos)
   end
 
   # Json route
@@ -91,7 +91,7 @@ defmodule TodoappWeb.TodoController do
 
     # text(conn, "hello query")
 
-    render(conn, "show.html", todo: todo )
+    render(conn, :show, todo: todo )
   end
 
   def edit(conn, %{"id" => id}) do
