@@ -5,7 +5,7 @@ defmodule TodoappWeb.TodoController do
   alias Todoapp.TodoApp.Todo
   alias Todoapp.Repo
 
-  import Ecto.Query
+  import Ecto.Query, only: [from: 2, from: 1]
   alias Todoapp.DataContext.Comment
 
   def index(conn, _params) do
@@ -65,17 +65,33 @@ defmodule TodoappWeb.TodoController do
 
   def show(conn, %{"id" => id}) do
      
-    # TEMP: BAD CODE
-
+    
     # TRY IN ONE QUERY
       ##  - Two different approaches
 
-    one_todo = Repo.get(Todo, id)
-    comments = Ecto.assoc(one_todo, :comments) |> Repo.all
+    # Approach 1
+    # one_todo = Repo.get(Todo, id)
+    # comments = Ecto.assoc(one_todo, :comments) |> Repo.all
+    # render(conn, "show.html", todo: one_todo, comments: comments)
 
-    # todo->comments -> already fetched
-    IO.puts("+++++++++++")
-    render(conn, "show.html", todo: one_todo, comments: comments)
+    # Approach 2
+    # todo = Repo.get(Todo, id) |> Repo.preload([:comments])
+    # render(conn, "show.html", todo: todo )
+
+    # Approach 3
+    query = from t in Todo,
+          where: t.id == ^id,
+          left_join: c in assoc(t, :comments),
+          preload: [comments: c]
+   
+    todo = Repo.one(query)
+
+    IO.puts "++++++++++"
+    IO.inspect todo
+
+    # text(conn, "hello query")
+
+    render(conn, "show.html", todo: todo )
   end
 
   def edit(conn, %{"id" => id}) do
