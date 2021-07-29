@@ -1,5 +1,7 @@
 <h1>Show Todo</h1>
 
+<button id="action_publish">Publish Message</button>
+
 <ul>
 
   <li>
