@@ -13,7 +13,8 @@ defmodule TodoappWeb.TodoController do
   alias Todoapp.Plugs.CountTodosModule  # module plug
 
   plug :todos_count when action in [:index]
-  plug CountTodosModule when action in [:index]
+  
+  plug CountTodosModule, [msg: "Your total # of todos: "]  # when action in [:index]
 
   def index(conn, _params) do
     # todos = TodoApp.list_todos()

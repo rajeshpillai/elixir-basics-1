@@ -6,12 +6,29 @@ defmodule Todoapp.Plugs.CountTodosModule do
   alias Todoapp.Repo
 
   def init(opts) do 
-    opts 
+    Keyword.fetch(opts, :msg)
   end
 
-  def call(conn, _opts) do 
+  def call(conn, msg) do 
     IO.puts("module plug +++++++ plug")
     total = Repo.one(from t in Todo, select: count("*"))
-    assign(conn, :mtodos_count, total)
+
+    case msg do
+      {:ok, msg} ->
+        message = "#{msg} #{total}"
+        assign(conn, :todo_count_message, message)
+
+      :error ->
+        message = "We found #{total} todos"
+        assign(conn, :todo_count_message, message)
+    end
   end
+
+  # def call(conn, _opts) do 
+  #   IO.puts("module plug +++++++ plug")
+  #   total = Repo.one(from t in Todo, select: count("*"))
+  #   assign(conn, :mtodos_count, total)
+  # end
+
+
 end

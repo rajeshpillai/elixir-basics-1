@@ -25,6 +25,7 @@
       </section>
       <div>Functon Plug: Total Todos: <%= @conn.assigns[:todos_count] %></div>
       <div>Module Plug: Total Todos: <%= @conn.assigns[:mtodos_count] %></div>
+      <div>Module Plug: Total Todos: <%= @todo_count_message %></div>
     </header>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
