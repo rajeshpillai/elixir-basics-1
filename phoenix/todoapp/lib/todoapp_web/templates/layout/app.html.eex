@@ -23,7 +23,8 @@
           <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
         </a>
       </section>
-      <div>Total Todos: <%= @conn.assigns[:todos_count] %></div>
+      <div>Functon Plug: Total Todos: <%= @conn.assigns[:todos_count] %></div>
+      <div>Module Plug: Total Todos: <%= @conn.assigns[:mtodos_count] %></div>
     </header>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

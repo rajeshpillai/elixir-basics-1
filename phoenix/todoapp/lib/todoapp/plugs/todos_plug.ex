@@ -1,4 +1,4 @@
-defmodule Todoapp.Plugs do
+defmodule Todoapp.Plugs.CountTodos do
   import Plug.Conn 
   import Ecto.Query, only: [from: 2]
 

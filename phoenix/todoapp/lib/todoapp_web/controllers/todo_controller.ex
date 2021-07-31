@@ -8,10 +8,12 @@ defmodule TodoappWeb.TodoController do
   import Ecto.Query, only: [from: 2, from: 1]
   alias Todoapp.DataContext.Comment
 
-  import Todoapp.Plugs
+  import Todoapp.Plugs.CountTodos  #function plug
+  
+  alias Todoapp.Plugs.CountTodosModule  # module plug
 
-
-  plug :todos_count
+  plug :todos_count when action in [:index]
+  plug CountTodosModule when action in [:index]
 
   def index(conn, _params) do
     # todos = TodoApp.list_todos()
