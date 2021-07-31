@@ -8,6 +8,11 @@ defmodule TodoappWeb.TodoController do
   import Ecto.Query, only: [from: 2, from: 1]
   alias Todoapp.DataContext.Comment
 
+  import Todoapp.Plugs
+
+
+  plug :todos_count
+
   def index(conn, _params) do
     # todos = TodoApp.list_todos()
     # todos = Repo.all(Todo) |> Repo.preload(:comments)
@@ -85,9 +90,6 @@ defmodule TodoappWeb.TodoController do
           preload: [comments: c]
    
     todo = Repo.one(query)
-
-    IO.puts "++++++++++"
-    IO.inspect todo
 
     # text(conn, "hello query")
 
